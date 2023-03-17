@@ -1,0 +1,205 @@
+{% load static %}
+{%block content%}
+<!DOCTYPE html>
+<html>
+<title>Dashboard | Line free queue</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+  <span class="w3-bar-item w3-right">Line Free Queue </span>
+</div>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+  <div class="w3-container w3-row">
+    <div class="w3-col s4">
+    </div>
+    <div class="w3-col s8 w3-bar">
+	<img width="90px" src="{% static     'image/logo.png' %}"/><br>
+      <span><strong style="font-size:18px">BANK OF MAHARASHTRA SANGLI
+<br><br>	  
+	  <!-- Counter No: 02</strong></span><br> -->
+    </div>
+  </div>
+  <hr>
+  <div class="w3-container">
+    <h5>Username = {{usename}}</h5>
+  </div>
+  <div class="w3-container">
+    <h5>Mobile number = {{mobile}}</h5>
+  </div>
+  <div class="w3-container">
+    <h5>Reason of Visit = {{reason}}</h5>
+  </div>
+</nav>
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5 style="font-size:20px;"><b><i class="fa fa-dashboard fa-2x"></i> Current Status</b></h5>
+  </header>
+<br>
+  <div class="w3-row-padding w3-margin-bottom">
+    <div class="w3-quarter">
+      <div class="w3-container w3-green w3-padding-16">
+        <div class="w3-left"><i class="fa fa-cog w3-xxxlarge"></i></div>
+        <div class="w3-right">
+		
+          <h3>{{token}}</h3>
+        </div>
+        <div class="w3-clear"></div>
+        <h4> <a style="text-decoration:none"> Your Token ID &nbsp;</a></h4>
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container w3-red w3-padding-16">
+        <div class="w3-left"><i class="fa fa-male  w3-xxxlarge"></i></div>
+        <div class="w3-right">
+          <h3>{{Current}}</h3>
+        </div>
+        <div class="w3-clear"></div>
+        <h4>Current Token No</h4>
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container w3-teal w3-padding-16">
+        <div class="w3-left"><i class="fa fa-plus-circle w3-xxxlarge"></i></div>
+        <div class="w3-right">
+          <h3>30 min</h3>
+        </div>
+        <div class="w3-clear"></div>
+        <h4>Average Service Time</h4>
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container w3-blue w3-text-white w3-padding-16">
+        <div class="w3-left"><i class="fa fa-clock-o w3-xxxlarge"></i></div>
+        <div class="w3-right">
+          <h3> <span id="timer-display">00:00:00</span></h3>
+        </div>
+        <div class="w3-clear"></div>
+        <h4>Estimated Time</h4>
+      </div>
+    </div>
+  </div>
+  <header class="w3-container" style="padding-top:22px">
+    <h5 style="font-size:20px;"><b><i class="fa fa-globe fa-2x"></i> Places To Visit In Your Free Time</b></h5>
+  </header>
+  
+  <div class="w3-row-padding w3-margin-bottom">
+    <div class="w3-quarter">
+      <div class="w3-container w3-green w3-padding-16">
+        <div class="w3-left"><i class="fa fa-cutlery w3-xxxlarge"></i></div>
+        <div class="w3-right">
+		
+          <h3>&nbsp;</h3>
+        </div>
+        <div class="w3-clear"></div>
+        <h4> <a href="{% url 'location' %}" style="text-decoration:none"> Hotel Near You &nbsp;</a></h4>
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container w3-red w3-padding-16">
+        <div class="w3-left"><i class="fa fa-globe w3-xxxlarge"></i></div>
+        <div class="w3-right">
+        </div>
+        <div class="w3-clear"></div>
+        <h4>Tourist Places Near You</h4>
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container w3-teal w3-padding-16">
+        <div class="w3-left"><i class="fa fa-shopping-bag w3-xxxlarge"></i></div>
+        <div class="w3-right">
+          <h3></h3>
+        </div>
+        <div class="w3-clear"></div>
+        <h4>Shopping Mall Near You</h4>
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container w3-blue w3-text-white w3-padding-16">
+        <div class="w3-left"><i class="fa fa-bus w3-xxxlarge"></i></div>
+        <div class="w3-right">
+          <h3></h3>
+        </div>
+        <div class="w3-clear"></div>
+        <h4>Transport Facilities</h4>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+<script >
+  var seconds = 0;
+  var min = 30*("{{token}}"-"{{Current}}");
+  var minutes = min%60
+  var hours = Math.floor(min/60);
+
+
+  function timer() {
+    
+
+    if (seconds == 0) {
+      seconds = 60;
+      if (minutes==0){
+        minutes=60;
+        hours--;
+      }
+      minutes--;
+    }
+
+    if (minutes == 0) {
+      minutes = 60;
+      hours--;
+    }
+    seconds--;
+
+    var displaySeconds = seconds < 10 ? "0" + seconds : seconds;
+    var displayMinutes = minutes < 10 ? "0" + minutes : minutes;
+    var displayHours = hours < 10 ? "0" + hours : hours;
+
+    var timerDisplay = document.getElementById("timer-display");
+    timerDisplay.textContent = displayHours + ":" + displayMinutes + ":" + displaySeconds;
+  }
+  setInterval(timer, 1000);
+</script>
+<script>
+// Get the Sidebar
+var mySidebar = document.getElementById("mySidebar");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidebar, and add overlay effect
+function w3_open() {
+  if (mySidebar.style.display === 'block') {
+    mySidebar.style.display = 'none';
+    overlayBg.style.display = "none";
+  } else {
+    mySidebar.style.display = 'block';
+    overlayBg.style.display = "block";
+  }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+  mySidebar.style.display = "none";
+  overlayBg.style.display = "none";
+}
+</script>
+</body>
+</html>
+{% endblock content %}

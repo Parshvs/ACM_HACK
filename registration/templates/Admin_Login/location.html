@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Geolocation</title>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+
+</head>
+
+<body>
+    <div>
+    <label for="hotel">Choose a hotel:</label>
+
+    <select name="hotels" id="hotels" onchange="route(event)">
+      <option value="16.84548193554983, 74.60198321123008">Birthday garden</option>
+      <option value="16.846604144470664, 74.59861194163008">Asian International Hotel</option>
+      <option value="16.84526926187875, 74.59785016175148">The White House Executive</option>
+      <option value="16.850426789965844, 74.59273358390095">Hotel Icon Inn</option>
+      <option value="16.844390908664735, 74.6101218701316">Hotel Pearl</option>
+    </select>
+    <br>
+    <label for="transport">Choose a transport:</label>
+
+    <select name="transport" id="transport" onchange="route(event)">
+      <option value="16.85313078085411, 74.56310000023275">Bus Stand</option>
+      <option value="16.8578973041143, 74.58898387685738">Railway Station</option>
+      <option value="16.848889086655632, 74.59624904283552">Riksha Stop</option>
+    </select>
+    <br>
+    <label for="tourist">Choose a tourist places:</label>
+
+    <select name="tourist" id="tourist" onchange="route(event)">
+      <option value="16.862195352309755, 74.55962238865543">Ganesh Temple</option>
+      <option value="16.807378706123604, 74.42315437339154">Jahaj Mandir</option>
+      <option value="16.765275715442, 74.37019969863815">Ramling Valley Point</option>
+      <option value="16.92791676250237, 74.74712018704281">Dandoba View Point</option>
+      <option value="17.15245458310761, 74.37823237148412">Sagareshwar Deer Sanctuary</option>
+    </select>
+	<div id="map" style="width:100%; height: 100vh;"></div>
+    </div>
+	<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
+	<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+
+	<script>
+
+		var map = L.map('map').setView([16.845790019093098, 74.60144677159447], 11);
+		mapLink = "<a href='http://openstreetmap.org'>OpenStreetMap</a>";
+		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'Leaflet &copy; ' + mapLink + ', contribution', maxZoom: 18 }).addTo(map);
+
+		var marker = L.marker([16.845790019093098, 74.60144677159447]).addTo(map);
+
+		map.on('click', function (e) {
+			console.log(e)
+			var newMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+			L.Routing.control({
+				waypoints: [
+					L.latLng(16.845790019093098, 74.60144677159447),
+					L.latLng(e.latlng.lat, e.latlng.lng)
+				]
+			}).on('routesfound', function (e) {
+				var routes = e.routes;
+				console.log(routes);
+
+				e.routes[0].coordinates.forEach(function (coord, index) {
+					setTimeout(function () {
+						marker.setLatLng([coord.lat, coord.lng]);
+					}, 100 * index)
+				})
+
+			}).addTo(map);
+		});
+
+        function route(evt) {
+            console.log(evt.target.value)
+            var latlong=evt.target.value;
+            var data=latlong.split(',')
+            var lat=data[0]
+            var lon=data[1]
+            console.log(lat,lon)
+            var newMarker = L.marker([lat,lon]).addTo(map);
+            L.Routing.control({
+				waypoints: [
+					L.latLng(16.845790019093098, 74.60144677159447),
+					L.latLng(lat,lon)
+				]
+			}).on('routesfound', function (e) {
+				var routes = e.routes;
+				console.log(routes);
+
+				e.routes[0].coordinates.forEach(function (coord, index) {
+					setTimeout(function () {
+						marker.setLatLng([coord.lat, coord.lng]);
+					}, 100 * index)
+				})
+
+			}).addTo(map);
+        }
+
+	</script>
+    
+
+</body>
+
+</html>
